@@ -74,5 +74,5 @@ if __name__=="__main__":
 	service = googleapiclient.discovery.build(
 		API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
 	
-	bot.polling()
+	bot.polling(none_stop=False, interval=0, timeout=200)
 	
