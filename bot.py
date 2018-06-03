@@ -23,7 +23,7 @@ token = "591889511:AAEPnd_qaD_q5VpCLYptRnbOhAdnMm8CCU8"
 API_KEY = "AIzaSyAWnU2keQYIZZdhU77dTRcRDZfsxsmNxsM"
 EngineID = "003285803633102658846:cddtcxueg00"
 bot = telebot.TeleBot(token)
-HELP_MSG = "This is Photo Bot. Ask me for photos using command /photo"
+HELP_MSG = "This is Photo Bot. Ask me for photos using command /photo\nExamples\n\n/photo - random image \n/photo apple - images of apple \n/photo sunset - images of sunset"
 link = "https://www.google.co.in/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
 
 @bot.message_handler(commands=['start','help'])
@@ -46,25 +46,36 @@ def response(message):
       imgType="photo",
       num=10,
     ).execute()
-	n=len(res['items'])
-	i=random.randint(1,(n-1))
 
-	global link
+	try:
+		n=len(res['items'])
+		print("found "+str(n)+" images")
+
+		i=random.randint(1,(n-1))
+
+		global link
 	
-	link = res['items'][i]['pagemap']['cse_image'][0]['src']
-	link=parse_url(link)
-	link=link.scheme+'://'+link.host+link.path
+		link = res['items'][i]['pagemap']['cse_image'][0]['src']
+		link=parse_url(link)
+		link=link.scheme+'://'+link.host+link.path
 
-	f = open('sample.jpeg','wb')
-	f.write(requests.get(link).content)
-	f.close()
+		f = open('sample.jpeg','wb')
+		f.write(requests.get(link).content)
+		f.close()
 
-	bio = BytesIO()
-	bio.name = 'sample.jpeg'
-	image = Image.open('sample.jpeg')
-	image.save(bio, 'JPEG')
-	bio.seek(0)
-	bot.send_photo(message.chat.id, photo=bio)
+		bio = BytesIO()
+		bio.name = 'sample.jpeg'
+		image = Image.open('sample.jpeg')
+		image.save(bio, 'JPEG')
+		bio.seek(0)
+		try:
+			bot.send_photo(message.chat.id, photo=bio)
+		except Exception as e:
+			print("Phot was too big, used send_document")
+			bot.send_document(message.chat.id, doc=bio)
+
+	except KeyError as error:
+		bot.reply_to(message,"Found no images for "+message.text+". Try something else")
 
 @bot.message_handler(func=lambda message: True)
 def echo(message):
