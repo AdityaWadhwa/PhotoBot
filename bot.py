@@ -39,6 +39,7 @@ def handle_emoji(message):
 @bot.message_handler(commands=['photo'])
 def response(message):
 	print(message)
+	bot.send_chat_action(message.chat.id, 'typing')
 	res = service.cse().list(
       q=message.text,
       cx=EngineID,
