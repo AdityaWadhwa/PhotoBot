@@ -51,7 +51,7 @@ def response(message):
 		n=len(res['items'])
 		print("found "+str(n)+" images")
 
-		i=random.randint(1,(n-1))
+		i=random.randint(1,n)
 
 		global link
 	
@@ -70,12 +70,17 @@ def response(message):
 		bio.seek(0)
 		try:
 			bot.send_photo(message.chat.id, photo=bio)
+
 		except Exception as e:
 			print("Phot was too big, used send_document")
-			bot.send_document(message.chat.id, doc=bio)
+			bot.send_document(message.chat.id, bio)
 
 	except KeyError as error:
 		bot.reply_to(message,"Found no images for "+message.text+". Try something else")
+
+	except Exception as e:
+		bot.reply_to(message,"Found no images for "+message.text+". Try something else")
+
 
 @bot.message_handler(func=lambda message: True)
 def echo(message):
