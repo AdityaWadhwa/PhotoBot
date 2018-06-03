@@ -20,7 +20,8 @@ API_SERVICE_NAME = "customsearch"
 API_VERSION = 'v1'
 
 token = "591889511:AAEPnd_qaD_q5VpCLYptRnbOhAdnMm8CCU8" 
-API_KEY = "AIzaSyAWnU2keQYIZZdhU77dTRcRDZfsxsmNxsM"
+#API_KEY = "AIzaSyAWnU2keQYIZZdhU77dTRcRDZfsxsmNxsM"
+API_KEY = "AIzaSyDUqF0nCc8q1Ms2mOzQnA0SkeOs_rkY_XI"
 EngineID = "003285803633102658846:cddtcxueg00"
 bot = telebot.TeleBot(token)
 HELP_MSG = "This is Photo Bot. Ask me for photos using command /photo\nExamples\n\n/photo - random image \n/photo apple - images of apple \n/photo sunset - images of sunset"
@@ -39,9 +40,14 @@ def handle_emoji(message):
 @bot.message_handler(commands=['photo'])
 def response(message):
 	print(message)
+	try:
+		query=message.text.split(' ',1)[1]
+	except IndexError as error:
+		query=" "
+
 	bot.send_chat_action(message.chat.id, 'typing')
 	res = service.cse().list(
-      q=message.text,
+      q=query,
       cx=EngineID,
       imgType="photo",
       num=10,
