@@ -45,8 +45,8 @@ def response(message):
       imgType="photo",
       num=10,
     ).execute()
-
-	i=random.randint(1,9)
+	n=len(res['items'])
+	i=random.randint(1,(n-1))
 
 	global link
 	
