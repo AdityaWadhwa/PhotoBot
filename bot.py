@@ -19,10 +19,10 @@ SCOPES = ['https://www.googleapis.com/customsearch/']
 API_SERVICE_NAME = "customsearch"
 API_VERSION = 'v1'
 
-token = "591889511:AAEPnd_qaD_q5VpCLYptRnbOhAdnMm8CCU8" 
-#API_KEY = "AIzaSyAWnU2keQYIZZdhU77dTRcRDZfsxsmNxsM"
-API_KEY = "AIzaSyDUqF0nCc8q1Ms2mOzQnA0SkeOs_rkY_XI"
-EngineID = "003285803633102658846:cddtcxueg00"
+token = "ENTER_YOUR_TOKEN" 
+
+API_KEY = "ENTER_API_KEY"
+EngineID = "ENTER_ENGINE_ID"
 bot = telebot.TeleBot(token)
 HELP_MSG = "This is Photo Bot. Ask me for photos using command /photo\nExamples\n\n/photo - random image \n/photo apple - images of apple \n/photo sunset - images of sunset"
 link = "https://www.google.co.in/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
